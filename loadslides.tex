@@ -1,0 +1,289 @@
+
+% Copyright (c) 2022 by Lars Spreng
+% This work is licensed under the Creative Commons Attribution 4.0 International License. 
+% To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Add your packages and commands to this file
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Fonts
+% \RequirePackage{palatino} % for serif slides
+% \usefonttheme{serif}
+\RequirePackage[scaled]{helvet} % for sans-serif slides
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+
+\usepackage{extsizes}
+\usepackage{styles/elegantmacros}
+\usepackage{adjustbox}
+\usepackage{tikz}
+
+
+% --- Typography -------------------------------------------------------------
+% The source deck uses Gill Sans Light / SemiBold. pdfLaTeX cannot use
+% arbitrary system fonts directly, so this version uses Gillius ADF, a
+% Gill-Sans-inspired Type 1 font that is one of the closest TeX substitutes.
+% The `scaled=0.98` adjustment gives proportions close to the reference deck.
+\usepackage[scaled=0.98]{gillius}
+
+
+\usefolder{styles}
+\usetheme[style=lecture]{elegant}
+%\usetheme[style=gold]{elegant}
+
+\newcommand{\makepart}[1]{ % For convenience
+\part{#1} \frame{\partpage}
+}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Figures
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
+\RequirePackage{ragged2e}
+\RequirePackage{schemabloc}
+%\RequirePackage{natbib}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage[%
+  natbib=true, backend=biber,%
+  style=apa, isbn=false,url=false,uniquename=false%, useprefix=true%
+  ]{biblatex}
+\addbibresource{references.bib}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Figures
+\RequirePackage{wrapfig}
+\RequirePackage{pgfplots}
+\RequirePackage{graphicx}
+\RequirePackage{adjustbox}
+\RequirePackage{environ}
+\pgfplotsset{compat=1.18}
+
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+  \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Maths 
+\RequirePackage{textcomp}
+\RequirePackage{amsmath} 
+\RequirePackage{amsthm}
+\RequirePackage{mathtools}
+%\RequirePackage{bbm}
+%\RequirePackage{algorithm}
+%\RequirePackage[osf,sc]{mathpazo}
+%\RequirePackage{pifont}
+%\newcommand{\xmark}{\ding{55}}%
+%\numberwithin{equation}{section}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\setbeamertemplate{theorems}[numbered] % to number
+
+\theoremstyle{definition}
+\newtheorem{fact}{Fact}[section]
+\newtheorem{examp}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{assumption}{Assumption}
+
+\providecommand{\H}{\mathscr{H}}      
+\providecommand{\E}{\mathbb{E}}
+\makeatletter
+\def\munderbar#1{\underline{\sbox\tw@{$#1$}\dp\tw@\z@\box\tw@}}
+\makeatother
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- Colors -----------------------------------------------------------------
+% Dominant background sampled from the reference slides: RGB 80,103,126.
+\definecolor{ubicompblue}{RGB}{80,103,126}
+\definecolor{ubicompwhite}{RGB}{248,249,250}
+\definecolor{ubicomplight}{RGB}{216,239,255}
+\definecolor{ubicompgray}{RGB}{190,197,203}
+\definecolor{ubicompdark}{RGB}{58,64,70}
+
+% --- Global Beamer setup ----------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+% Page number flush right, 0.25in clear of the right paper edge and 0.1in clear
+% of the bottom. The number sits in a plain \hbox to\paperwidth rather than a
+% paragraph, so \parfillskip cannot compete with the \hfil and pull it back
+% towards the middle. Extra box depth is what lifts the number off the bottom
+% edge: with the original dp=1.2ex the digits sat 1.28pt above the paper edge,
+% so dp=1.2ex-1.28pt is zero clearance and the wanted margin is added to that.
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=\dimexpr1.2ex-1.28pt+0.1in\relax]{page number in head/foot}%
+      \hbox to\paperwidth{%
+        \usebeamerfont{page number in head/foot}%
+        \hskip0.25in\copyright~\insertshortauthor%
+        \hfil\insertframenumber\hskip0.25in%
+      }%
+    \end{beamercolorbox}%
+  }%
+}
+\setbeamertemplate{items}[circle]
+\setbeamersize{text margin left=0.55cm,text margin right=0.55cm}
+
+\setbeamercolor{normal text}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{background canvas}{bg=ubicompblue}
+\setbeamercolor{frametitle}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{block title}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{block body}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{structure}{fg=ubicompwhite}
+\setbeamercolor{itemize item}{fg=ubicompwhite}
+\setbeamercolor{itemize subitem}{fg=ubicompwhite}
+\setbeamercolor{page number in head/foot}{fg=ubicompgray,bg=ubicompblue}
+
+\setbeamerfont{normal text}{size=\fontsize{19}{23}}
+\setbeamerfont{block title}{size=\fontsize{19}{23}}
+\setbeamerfont{block body}{size=\fontsize{19}{23}}
+\setbeamerfont{frametitle}{series=\bfseries,size=\fontsize{30}{34}}
+\setbeamerfont{page number in head/foot}{size=\fontsize{8}{9}}
+\setbeamerfont{itemize/enumerate body}{size=\fontsize{18}{22}}
+\setbeamerfont{itemize/enumerate subbody}{size=\fontsize{16}{20}}
+
+% --- Title page -------------------------------------------------------------
+% The elegant theme puts the title and author in white panels (bg=white) and
+% sets them in small caps from the structure font. Blend the panels into the
+% slide background and use the same Gillius face as the frame titles.
+\setbeamercolor{title}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{subtitle}{fg=ubicomplight,bg=ubicompblue}
+\setbeamercolor{author}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{institute}{fg=ubicompwhite,bg=ubicompblue}
+\setbeamercolor{date}{fg=ubicompgray,bg=ubicompblue}
+
+\setbeamerfont{title}{family=\sffamily,series=\bfseries,shape=\upshape,size=\fontsize{30}{34}}
+\setbeamerfont{subtitle}{family=\sffamily,series=\mdseries,shape=\upshape,size=\fontsize{20}{24}}
+\setbeamerfont{author}{family=\sffamily,series=\mdseries,shape=\upshape,size=\fontsize{20}{24}}
+% The theme sets these at \tiny-ish sizes; the institute carries the thanks line.
+\setbeamerfont{institute}{family=\sffamily,series=\mdseries,shape=\upshape,size=\fontsize{14}{16}}
+\setbeamerfont{date}{family=\sffamily,series=\mdseries,shape=\upshape,size=\fontsize{16}{18}}
+
+% Title on the centre of the slide; author, institute (which carries the thanks
+% line) and date grouped together near the foot of the slide.
+% Both groups are placed absolutely with tikz overlay nodes: inside the frame's
+% natural-height box \vfill collapses to zero, so glue cannot push the lower
+% group down to the bottom.
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=center,inner sep=0pt] at (current page.center) {%
+      \parbox{\textwidth}{\centering\usebeamertemplate{title}}%
+    };
+    \node[anchor=south,inner sep=0pt] at ([yshift=0.6cm]current page.south) {%
+      \parbox{\textwidth}{%
+        \centering%
+        \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par%
+        \vskip0.4em%
+        \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par%
+        \vskip0.5em%
+        \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
+% Left-aligned frame titles without decorations.
+ \setbeamertemplate{frametitle}{%
+   \vspace*{0.20cm}%
+   \insertframetitle\par
+ }
+
+% Indent blocks to line up with other text.
+% The indent is applied to the whole block (leftskip), so wrapped lines stay
+% flush with the first line. Every line inside the template ends in % so no
+% stray spaces leak into the block body -- those spaces used to stretch on the
+% justified first line and looked like a paragraph indent.
+\newlength{\blockindent}
+\setlength{\blockindent}{16.4pt} % frame-title left edge - text margin - box sep
+
+\setbeamertemplate{block begin}{%
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[
+    wd=\textwidth,
+    leftskip=\blockindent,
+    rightskip=0pt,
+    sep=4pt,
+    vmode
+  ]{block title}%
+    \usebeamerfont*{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \nointerlineskip%
+  \begin{beamercolorbox}[
+    wd=\textwidth,
+    leftskip=\blockindent,
+    rightskip=0pt,
+    sep=4pt,
+    vmode
+  ]{block body}%
+    \usebeamerfont{block body}%
+    \setlength{\parindent}{0pt}%
+    \noindent\ignorespaces%
+}
+
+\setbeamertemplate{block end}{%
+  \end{beamercolorbox}%
+  \vskip\smallskipamount%
+}
+
+% \newenvironment{point}
+% {%
+%   \begin{tikzpicture}[remember picture,overlay]
+%     \node[
+%       anchor=center,
+%       inner sep=0pt
+%     ] at (current page.center) {%
+%       \begin{adjustbox}{width=0.9\paperwidth}
+%         \hbox\bgroup
+% }
+% {%
+%         \egroup
+%       \end{adjustbox}
+%     };
+%   \end{tikzpicture}%
+
+% }
+
+
+\NewEnviron{point}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[
+      anchor=center,
+      inner sep=0pt
+    ] at (current page.center) {%
+      \adjustbox{width=0.85\paperwidth}{%
+        \strut%
+        \BODY
+      }%
+    };
+  \end{tikzpicture}%
+}
