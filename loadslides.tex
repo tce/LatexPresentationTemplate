@@ -37,12 +37,98 @@
 {\noindent\begin{tabular*}{\textwidth}}%
 {\end{tabular*}}
 
+\definecolor{progcol}{rgb}{1.0,1.0,0.0}
+\definecolor{red}{rgb}{0.5,0.0,0.0}
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+\definecolor{navyblue}{rgb}{0,0,.5}
+\definecolor{violet}{rgb}{0.4,0.0,0.4}
+\definecolor{mymagenta}{cmyk}{0,0.6,0,0.4}
+\definecolor{litegreen}{cmyk}{.25,0,0.75,0.1}
+\definecolor{orange}{cmyk}{.25,0.4,0.4,0}
+\definecolor{cyan}{cmyk}{0.7,0,0,0.2}
+\definecolor{myred}{rgb}{1.0,1.0,0.0}
+\definecolor{myblue}{rgb}{0.0,0.0,0.5}
+\definecolor{mygreen}{rgb}{0.0,1.0,0.4}
+\newcommand{\txr}[1]{\textcolor{myred}{#1}}
+\newcommand{\txprog}[1]{\textcolor{progcol}{#1}}
+\newcommand{\txR}[1]{\textcolor{red}{#1}}
+\newcommand{\txb}[1]{\textcolor{myblue}{#1}}
+\newcommand{\txg}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\txm}[1]{\textcolor{magenta}{#1}}
+\newcommand{\mat}[1]{\textcolor{mymagenta}{#1}}
+\renewcommand{\emph}[1]{\textcolor{red}{\em\bf #1}}
+\newcommand{\black}[1]{\textcolor{black}{#1}}
+\newcommand{\bbox}[1]{\black{\mbox{#1}}}
+
 \newcommand{\tabtop}{\rule{0pt}{2ex}}%%Use after hline in body of table
 \newcommand{\tabbot}{\rule[-1ex]{0pt}{1.8ex}}%%Use before hline " " " "
 \newcommand{\tabhead}{\rule[-0.85ex]{0pt}{2.8ex}}%%Use in lines between hlines
 \newcommand{\squad}{\hspace*{0.5em}}%%Use occasionally at left edge
 \newcommand{\sq}[1]{\hspace*{#1\textwidth}}
 \def\tf{\rm} %% table font
+
+\newcommand{\defprog}[1]{\txprog{\mbox{{\sc #1}}}}
+\newcommand{\prog}[1]{\mbox{{\sc #1}}}   %%% same as defprog
+\newcommand{\noprog}[1]{\mbox{{\sc #1}}} %%% same as defprog
+\newcommand{\system}[1]{\mbox{{\sc #1}}} %%% same as defprog
+\newcommand{\nosystem}[1]{\mbox{{\sc #1}}} %%% same as defprog
+\newcommand{\act}[1]{{\it #1}}
+\newcommand{\key}[1]{\txb{{\bf #1}}}
+\def\k{\key}
+\newcommand{\var}[1]{\txg{{\it #1}}}
+\def\v{\var}
+\def\p{\prg}
+\newcommand{\setq}[2]{#1\hbox{$\,\leftarrow\,$}#2}
+\newcommand{\setqmath}[2]{#1 \leftarrow #2}
+
+% Width actually available for content on the current line. Inside a block the
+% template's leftskip/rightskip narrow the line, but \linewidth still reports
+% the full \textwidth, so boxes sized to \textwidth hang off the right edge.
+% Coercing the two glue registers to dimens picks up their natural widths, so
+% this collapses to \linewidth outside of a block.
+\newcommand{\fitwidth}{\dimexpr\linewidth-\leftskip-\rightskip\relax}
+
+\newlength{\codewidth}
+\newlength{\codeindent}
+
+\newcommand{\defn}[1]{\textbf{\textcolor{myblue}{#1}}}
+
+\newcommand{\ac}{,\hspace{0.15em}}
+\newcommand{\ts}{\,}
+\newcommand{\bodysep}{\vspace{0.1in}}
+\newcommand{\subfnsep}{\vspace{0.06in}}
+\newcommand{\prebnfsep}{\vspace{-0.25in}}
+\newcommand{\postbnfsep}{\vspace{0.1in}}
+\newcommand{\fnvar}[1]{\prog{#1}}
+\newcommand{\func}[3]{\key{function} \defprog{#1}(\txg{#2}) \key{returns} #3}
+\newcommand{\nofunc}[3]{\key{function} \noprog{#1}(#2) \key{returns} #3}
+\newcommand{\proc}[2]{\key{procedure} \defprog{#1}(\txg{#2})}
+\newcommand{\noproc}[2]{\key{procedure} \noprog{#1}(#2)}
+\newcommand{\firstinputs}[2]{\key{inputs}: \var{#1}, #2}
+\newcommand{\inputs}[2]{\phantom{\key{inputs}: }\var{#1}, #2}
+\newcommand{\firstlocal}[2]{\key{local variables}: \var{#1}, #2}
+\newcommand{\local}[2]{\phantom{\key{local variables}: }\var{#1}, #2}
+\newcommand{\firststatic}[2]{\key{static}: \var{#1}, #2}
+\newcommand{\static}[2]{\phantom{\key{static}: }\var{#1}, #2}
+
+
+
+\def\code{\noindent\nobreak\begin{large}
+    \begingroup\obeylines\obeyspaces\docode}
+  \def\docode#1{\noindent%
+    \setlength{\codewidth}{\fitwidth}%
+    \addtolength{\codewidth}{-2\fboxsep}%
+    \addtolength{\codewidth}{-2\fboxrule}%
+    \settowidth{\codeindent}{~~}%
+    \framebox[\codewidth][l]%
+    {~~\begin{minipage}{\dimexpr\codewidth-\codeindent\relax}~
+        #1
+        ~\end{minipage}}\endgroup%
+    \nobreak\end{large}\noindent\ignorespaces}
+\def\asis{\obeylines\obeyspaces}
+\def\ttp{.\skip -0.5em\ }
+{\obeyspaces\global\def {\ }}
+
 
 \setbeamerfont{bibliography entry author}{shape=\scshape,size=\tiny}%
 \setbeamerfont{bibliography entry title}{shape=\scshape,size=\tiny}
@@ -330,7 +416,7 @@
 \newcommand{\fitframe@nocaption}[1]{%
   \begin{figure}
     \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{#1}%
+    \includegraphics[width=\linewidth,height=0.8\textheight,keepaspectratio]{#1}%
   \end{figure}%
 }
 
