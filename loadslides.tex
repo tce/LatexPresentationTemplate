@@ -55,7 +55,7 @@
 \newcommand{\txb}[1]{\textcolor{myblue}{#1}}
 \newcommand{\txg}[1]{\textcolor{mygreen}{#1}}
 \newcommand{\txm}[1]{\textcolor{magenta}{#1}}
-\newcommand{\mat}[1]{\textcolor{mymagenta}{#1}}
+\newcommand{\mat}[1]{\textcolor{progcol}{#1}}
 \renewcommand{\emph}[1]{\textcolor{red}{\em\bf #1}}
 \newcommand{\black}[1]{\textcolor{black}{#1}}
 \newcommand{\bbox}[1]{\black{\mbox{#1}}}
@@ -110,6 +110,10 @@
 \newcommand{\local}[2]{\phantom{\key{local variables}: }\var{#1}, #2}
 \newcommand{\firststatic}[2]{\key{static}: \var{#1}, #2}
 \newcommand{\static}[2]{\phantom{\key{static}: }\var{#1}, #2}
+
+\def\ceiling#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\alldiff{{\mbox {\itshape alldiff}}}
 
 
 
