@@ -334,8 +334,11 @@
 }
 
 % Left-aligned frame titles without decorations.
+% The title indent is applied as leftskip (not a paragraph indent) so wrapped
+% lines stay flush with the first line.
  \setbeamertemplate{frametitle}{%
    \vspace*{0.20cm}%
+   \leftskip=\parindent\noindent%
    \insertframetitle\par
  }
 
