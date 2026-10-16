@@ -31,6 +31,22 @@
 \usepackage{multimedia}
 \usepackage{syllogism}
 \usepackage{media9}
+\usepackage{xparse}
+\usepackage{ragged2e}
+
+
+\newenvironment{point}[1][40]
+{%
+  \par
+  \begin{minipage}{0.90\textwidth}
+  \raggedright
+  \fontsize{#1}{1.18\dimexpr#1pt\relax}\selectfont
+  \bfseries
+}
+{%
+  \end{minipage}
+  \par
+}
 
 
 \newenvironment{mytabular}%
@@ -116,6 +132,10 @@
 \def\alldiff{{\mbox {\itshape alldiff}}}
 \def\Astar{A$^*$}
 \def\qquad{\hskip2em\relax}
+
+
+
+\newcommand{\fr}[1]{\begin{frame}{#1}\end{frame}}
 
 
 
@@ -398,19 +418,19 @@
 % }
 
 
-\NewEnviron{point}{%
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[
-      anchor=center,
-      inner sep=0pt
-    ] at (current page.center) {%
-      \adjustbox{width=0.85\paperwidth}{%
-        \strut%
-        \BODY
-      }%
-    };
-  \end{tikzpicture}%
-}
+% \NewEnviron{point}{%
+%   \begin{tikzpicture}[remember picture,overlay]
+%     \node[
+%       anchor=center,
+%       inner sep=0pt
+%     ] at (current page.center) {%
+%       \adjustbox{width=0.85\paperwidth}{%
+%         \strut%
+%         \BODY
+%       }%
+%     };
+%   \end{tikzpicture}%
+% }
 
 
 \makeatletter
