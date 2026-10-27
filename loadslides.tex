@@ -33,7 +33,78 @@
 \usepackage{media9}
 \usepackage{xparse}
 \usepackage{ragged2e}
+\usepackage{lmodern}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{listings}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
+% Palette: diverging blue (helps) / red (hurts), text in neutral ink
+\definecolor{helps}{HTML}{2A78D6}
+\definecolor{hurts}{HTML}{E34948}
+\definecolor{ink}{HTML}{0B0B0B}
+\definecolor{inksoft}{HTML}{52514E}
+\definecolor{grid}{HTML}{E4E3DF}
+\definecolor{codebg}{HTML}{F5F4F1}
+\definecolor{hl}{HTML}{FFF1C2}
+\def\tab{\hspace{0.3in}}    %% Insert space (even at start of line)
+\def\al{\\\tab}                %% Next line is indented
+\def\nl{\\\tab\tab}            %% Next line is double-indented
+\def\qquad{\hskip2em\relax}
+\def\blob{$\diamondsuit\ \ $}  %% Itemization without all the spacing
+\newcommand{\entails}{\models}
+%\newcommand{\implies}{\:\;{\Rightarrow}\:\;}
+\newcommand{\textimplies}{\;{\Rightarrow}\;}
+\newcommand{\impliessymbol}{\Rightarrow}
+\newcommand{\lequiv}{\;\;{\Leftrightarrow}\;\;}
+\newcommand{\textlequiv}{\;{\Leftrightarrow}\;}
+\newcommand{\lequivsymbol}{\Leftrightarrow}
+\newcommand{\xor}{\not\lequiv}
+\newcommand{\All}[1]{\forall\,#1\;\;}
+\newcommand{\Exi}[1]{\exists\,#1\;\;}
+\newcommand{\Exii}[1]{\exists!\,#1\;\;}% -pnorvig
+\newcommand{\Iot}[2]{\iota\,#1\,#2}
+\newcommand{\Lam}[2]{\lambda #1\;#2}
+\newcommand{\Qua}[3]{[#1\,#2\;#3]}
+
+\newcommand{\union}{{\,{\cup}\,}}
+\newcommand{\intersection}{{\,{\cap}\,}}
+\renewcommand{\emptyset}{\{\,\}}
+\newcommand{\emptylist}{[\,]}
+\newcommand{\adjoin}[2]{\{#1|#2\}}
+\newcommand{\elt}{{\,{\in}\,}}  %%%cuts down on spacing
+\newcommand{\eq}{{\,{=}\,}}  %%%cuts down on spacing
+
+% \lstdefinestyle{py}{
+%   language=Python,
+%   basicstyle=\ttfamily\fontsize{6.6}{7.6}\selectfont,
+%   keywordstyle=\color{helps}\bfseries,
+%   commentstyle=\color{inksoft}\itshape,
+%   stringstyle=\color{ink},
+%   backgroundcolor=\color{codebg},
+%   frame=none,
+%   showstringspaces=false,
+%   columns=fullflexible,
+%   keepspaces=true,
+%   xleftmargin=4pt, xrightmargin=4pt,
+%   aboveskip=2pt, belowskip=2pt,
+%   escapeinside={(*@}{@*)},
+% }
+\lstdefinestyle{py}{
+  language=Python,
+  basicstyle=\ttfamily\fontsize{6.6}{7.6}\selectfont,
+  frame=none,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  xleftmargin=4pt, xrightmargin=4pt,
+  aboveskip=2pt, belowskip=2pt,
+  escapeinside={(*@}{@*)},
+}
+
+\lstset{style=py}
+\newcommand{\hlc}[1]{\colorbox{hl}{#1}}
 
 \newenvironment{point}[1][40]
 {%
@@ -293,7 +364,10 @@
   }%
 }
 \setbeamertemplate{items}[circle]
-\setbeamersize{text margin left=0.55cm,text margin right=0.55cm}
+% The right margin matches the visible left edge of the text, not the left text
+% margin: top-level bullets are indented, so their ink starts 28.05pt from the
+% paper edge (0.55cm = 15.6pt margin + 12.45pt itemize indent).
+\setbeamersize{text margin left=0.55cm,text margin right=28.05pt}
 
 \setbeamercolor{normal text}{fg=ubicompwhite,bg=ubicompblue}
 \setbeamercolor{background canvas}{bg=ubicompblue}
@@ -305,13 +379,22 @@
 \setbeamercolor{itemize subitem}{fg=ubicompwhite}
 \setbeamercolor{page number in head/foot}{fg=ubicompgray,bg=ubicompblue}
 
+% \setbeamerfont{normal text}{size=\fontsize{19}{23}}
+% \setbeamerfont{block title}{size=\fontsize{19}{23}}
+% \setbeamerfont{block body}{size=\fontsize{19}{23}}
+% \setbeamerfont{frametitle}{series=\bfseries,size=\fontsize{30}{34}}
+% \setbeamerfont{page number in head/foot}{size=\fontsize{8}{9}}
+% \setbeamerfont{itemize/enumerate body}{size=\fontsize{18}{22}}
+% \setbeamerfont{itemize/enumerate subbody}{size=\fontsize{16}{20}}
+
+
 \setbeamerfont{normal text}{size=\fontsize{19}{23}}
 \setbeamerfont{block title}{size=\fontsize{19}{23}}
 \setbeamerfont{block body}{size=\fontsize{19}{23}}
 \setbeamerfont{frametitle}{series=\bfseries,size=\fontsize{30}{34}}
 \setbeamerfont{page number in head/foot}{size=\fontsize{8}{9}}
-\setbeamerfont{itemize/enumerate body}{size=\fontsize{18}{22}}
-\setbeamerfont{itemize/enumerate subbody}{size=\fontsize{16}{20}}
+\setbeamerfont{itemize/enumerate body}{size=\fontsize{14}{18}}
+\setbeamerfont{itemize/enumerate subbody}{size=\fontsize{14}{18}}
 
 % --- Title page -------------------------------------------------------------
 % The elegant theme puts the title and author in white panels (bg=white) and
