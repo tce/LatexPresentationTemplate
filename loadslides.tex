@@ -204,6 +204,24 @@
 \def\Astar{A$^*$}
 \def\qquad{\hskip2em\relax}
 
+\def\stimes{{\,\times\,}}       %%%cuts down on spacing
+
+\def\code{\noindent\nobreak\begin{normalsize}
+        \begingroup\obeylines\obeyspaces\docode}
+\def\docode#1{\noindent\framebox[\columnwidth][l]%
+{~~\begin{minipage}{\codewidth}~
+#1
+~\end{minipage}}\endgroup%
+\nobreak\end{normalsize}\noindent\ignorespaces}
+\def\asis{\obeylines\obeyspaces}
+\def\ttp{.\skip -0.5em\ }
+{\obeyspaces\global\def {\ }}
+
+\def\nnl{\\\tab\tab\tab}       %% Next line is triple-indented
+\def\blob{$\diamondsuit\ \ $}  %% Itemization without all the spacing
+\def\bull{\vskip -8pt\item{$\bullet$\ }} %% Itemization with less spacing
+\def\u#1{$\underline{\mbox{#1}}$}
+\def\q#1{\txm{\u{#1}??}}
 
 
 \newcommand{\fr}[1]{\begin{frame}{#1}\end{frame}}
@@ -364,6 +382,9 @@
   }%
 }
 \setbeamertemplate{items}[circle]
+% items[circle] also turns enumerate labels into filled balls that read as
+% bullets; use plain numbers ("1.") for enumerate instead.
+\setbeamertemplate{enumerate items}[default]
 % The right margin matches the visible left edge of the text, not the left text
 % margin: top-level bullets are indented, so their ink starts 28.05pt from the
 % paper edge (0.55cm = 15.6pt margin + 12.45pt itemize indent).
@@ -377,6 +398,8 @@
 \setbeamercolor{structure}{fg=ubicompwhite}
 \setbeamercolor{itemize item}{fg=ubicompwhite}
 \setbeamercolor{itemize subitem}{fg=ubicompwhite}
+\setbeamercolor{enumerate item}{fg=ubicompwhite}
+\setbeamercolor{enumerate subitem}{fg=ubicompwhite}
 \setbeamercolor{page number in head/foot}{fg=ubicompgray,bg=ubicompblue}
 
 % \setbeamerfont{normal text}{size=\fontsize{19}{23}}
